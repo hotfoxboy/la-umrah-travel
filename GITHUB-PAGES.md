@@ -9,7 +9,7 @@ Destino: **https://hotfoxboy.github.io/la-umrah-travel/**.
 - `lib/paths.ts` centraliza o domínio e o prefixo. `next/link` aplica o prefixo automaticamente; ficheiros públicos, metadados e APIs do navegador usam `assetPath`. O estado activo da navegação normaliza o prefixo e a barra final.
 - `sitemap.xml`, `robots.txt` e `manifest.webmanifest` são gerados no build, com `dynamic = 'force-static'`. A imagem Open Graph é um PNG estático idêntico à saída do gerador original, preservado em `server/assets`.
 - As rotas dinâmicas já possuíam `generateStaticParams`. `dynamicParams = false` impede depender de geração de novas páginas no servidor. As fórmulas não comercializadas continuam sem páginas exportadas.
-- O service worker regista-se apenas no subdirectório deste projecto. O seu cache inclui apenas a página offline e ícones, é identificado pelo scope e não apaga caches de outros projectos no mesmo domínio GitHub.
+- O service worker regista-se apenas no subdirectório deste projecto. O seu cache inclui apenas a página offline, ícones e a fonte Quicksand, é identificado pelo scope e não apaga caches de outros projectos no mesmo domínio GitHub.
 - CSS, estrutura visual, textos das páginas e catálogo não foram redesenhados. As mensagens do formulário foram adaptadas apenas para explicar correctamente o modo de transmissão disponível.
 
 ## Compilar e verificar localmente

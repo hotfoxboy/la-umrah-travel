@@ -14,7 +14,7 @@ Le site fonctionne directement dans le navigateur. Son installation sur l’écr
 
 ## Politique de cache
 
-Le service worker ne conserve que la page hors connexion et les icônes explicitement autorisées. Ni HTML de catalogue, ni tarifs, ni réponses React Server Components, ni API, ni POST de formulaire ne sont stockés. Les navigations utilisent le réseau avec `cache: no-store` ; en cas d’échec, une page dédiée indique qu’une connexion est nécessaire. Le cache applicatif est séparé des favoris locaux.
+Le service worker ne conserve que la page hors connexion, les icônes et la police Quicksand explicitement autorisées. Ni HTML de catalogue, ni tarifs, ni réponses React Server Components, ni API, ni POST de formulaire ne sont stockés. Les navigations utilisent le réseau avec `cache: no-store` ; en cas d’échec, une page dédiée indique qu’une connexion est nécessaire. Le cache applicatif est séparé des favoris locaux.
 
 La nouvelle version du service worker attend. Une notification propose son activation, puis un rechargement volontaire après avoir terminé la demande. Aucun rechargement automatique ne détruit le formulaire. Incrémenter la version de `public/sw.js` lorsque les fichiers précachés changent ; les anciens caches de cette application sont alors supprimés, sans effacer les favoris ni les caches d’autres applications.
 

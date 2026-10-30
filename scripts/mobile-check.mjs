@@ -15,6 +15,17 @@ try{
  const send=(method,params={},sessionId)=>new Promise((resolve,reject)=>{const current=++id;pending.set(current,{resolve,reject});socket.send(JSON.stringify({id:current,method,params,...(sessionId?{sessionId}:{})}));});
  const evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw new Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
  const go=async path=>{await send('Page.navigate',{url:base+path});await pause(1500);};
+ const checkTypography=async label=>{
+  const result=await evaluate(`(async()=>{
+   await document.fonts.ready;
+   const family=getComputedStyle(document.body).fontFamily.split(',')[0].trim().replace(/['"]/g,'');
+   const faces=await Promise.all([400,500,600,700].map(weight=>document.fonts.load(weight+' 16px '+JSON.stringify(family),'Votre Omra à Médine œ €')));
+   const mismatches=[...document.querySelectorAll('body,body *')].filter(el=>!el.matches('script,style,noscript,svg,svg *')&&el.getClientRects().length&&([...el.childNodes].some(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim())||el.matches('input,select,textarea,button'))).filter(el=>!getComputedStyle(el).fontFamily.toLowerCase().includes('quicksand')).map(el=>({tag:el.tagName,class:el.className,font:getComputedStyle(el).fontFamily}));
+   return {family,weights:faces.map(list=>list.length),mismatches,fontRequests:performance.getEntriesByType('resource').filter(r=>r.name.includes('.woff2')).map(r=>r.name)};
+  })()`);
+  assert.match(result.family,/quicksand/i,label);assert.ok(result.weights.every(n=>n>0),`${label}: font weights not loaded`);assert.deepEqual(result.mismatches,[],`${label}: font-family overrides`);assert.ok(result.fontRequests.length>0,`${label}: missing WOFF2`);assert.ok(result.fontRequests.every(url=>url.startsWith(new URL(base).origin+basePath+'/')),`${label}: unscoped font resource`);
+  console.log(`OK Quicksand ${label}: all text and controls, loaded weights 400/500/600/700, local WOFF2`);
+ };
  await send('Page.enable');await send('Runtime.enable');await send('Network.enable');
  await send('Emulation.setFocusEmulationEnabled',{enabled:true});
  const manifest=await(await fetch(base+'/manifest.webmanifest')).json();assert.equal(manifest.display,'standalone');assert.ok(manifest.icons.some(i=>i.sizes==='512x512'&&i.purpose==='maskable'));
@@ -23,6 +34,7 @@ try{
   await send('Emulation.setDeviceMetricsOverride',{width,height:844,deviceScaleFactor:1,mobile:width<768});
   for(const path of (process.env.TEST_PATHS?process.env.TEST_PATHS.split(','):['/','/forfaits/confort','/contact'])){
    await go(path);
+   if(process.env.TEST_TYPOGRAPHY==='1')await checkTypography(`${width}px ${path}`);
    const result=await evaluate(`({scroll:document.documentElement.scrollWidth,width:innerWidth,nav:getComputedStyle(document.querySelector('.bottom-nav')).display})`);
    assert.ok(result.scroll<=width,JSON.stringify({path,width,...result}));assert.equal(result.nav==='none',width>=1024);
    if(width<1024){assert.equal(await evaluate("document.querySelectorAll('.bottom-nav a').length"),5);assert.equal(await evaluate("[...document.querySelectorAll('.bottom-nav a')].every(el=>{const r=el.getBoundingClientRect();return r.width>=44&&r.height>=44;})"),true);}
@@ -51,9 +63,10 @@ try{
  await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await go('/forfaits/confort');
  const gallery=await evaluate("(()=>{const r=document.querySelector('.product-gallery').getBoundingClientRect();return {y:r.top+r.height/2};})()");await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:310,y:gallery.y}]});for(const x of [270,230,190,150,110,70]){await send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y:gallery.y}]});await pause(40);}await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await pause(500);assert.ok(await evaluate("document.querySelector('.product-gallery').scrollLeft>0"),'Touch swipe moves the gallery');
  await evaluate("navigator.serviceWorker.ready.then(()=>new Promise(resolve=>{if(navigator.serviceWorker.controller)resolve(true);else navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(true),{once:true});}))");
- const keys=await evaluate("caches.keys().then(async names=>(await Promise.all(names.filter(n=>n.startsWith('la-umrah-')).map(async n=>(await(await caches.open(n)).keys()).map(r=>new URL(r.url).pathname)))).flat())");assert.ok(keys.length>0&&keys.every(p=>p===basePath+'/hors-connexion.html'||p.startsWith(basePath+'/icons/')),'Only approved static resources cached');
+ const keys=await evaluate("caches.keys().then(async names=>(await Promise.all(names.filter(n=>n.startsWith('la-umrah-')).map(async n=>(await(await caches.open(n)).keys()).map(r=>new URL(r.url).pathname)))).flat())");assert.ok(keys.length>0&&keys.every(p=>p===basePath+'/hors-connexion.html'||p===basePath+'/fonts/quicksand-latin.woff2'||p.startsWith(basePath+'/icons/')),'Only approved static resources cached');
  const targetsInfo=await send('Target.getTargets');const worker=targetsInfo.targetInfos.find(t=>t.type==='service_worker'&&t.url===base+'/sw.js');assert.ok(worker,'Active service worker target');const attached=await send('Target.attachToTarget',{targetId:worker.targetId,flatten:true});await send('Network.enable',{},attached.sessionId);await send('Network.emulateNetworkConditions',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0},attached.sessionId);
  await send('Network.setCacheDisabled',{cacheDisabled:true});await send('Network.emulateNetworkConditions',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0});await go('/forfaits/confort?offline-test=1');assert.match(await evaluate('document.body.innerText'),/connexion est indisponible/);assert.equal(await evaluate("document.body.innerText.includes('1 580')"),false,'No stale offline price');
+ if(process.env.TEST_TYPOGRAPHY==='1')await checkTypography('offline fallback');
  await send('Network.emulateNetworkConditions',{offline:false,latency:0,downloadThroughput:-1,uploadThroughput:-1},attached.sessionId);
  await send('Network.emulateNetworkConditions',{offline:false,latency:0,downloadThroughput:-1,uploadThroughput:-1});await go('/');assert.equal(await evaluate("document.querySelector('h1').textContent.includes('Votre Omra')"),true);
  assert.deepEqual(errors,[],'Uncaught JavaScript errors');
