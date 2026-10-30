@@ -1,0 +1,11 @@
+/* Only the home Hero uses this photograph and overlay. */
+.reference-hero>picture.home-hero-photo{inset:0 0 0 15%}
+.reference-hero .home-hero-photo .hero-image{object-position:center 78%;filter:none}
+.reference-hero:has(>.home-hero-photo) .hero-shade{background:linear-gradient(90deg,#041d40 0%,#062851f5 24%,#062851c9 40%,#06285124 66%,#041d4014),linear-gradient(0deg,#041d4070,transparent 45%)}
+@media(max-width:1023px){
+  .reference-hero>picture.home-hero-photo{inset:0}
+}
+@media(max-width:640px){
+  .reference-hero .home-hero-photo .hero-image{object-position:70% 75%}
+  .reference-hero:has(>.home-hero-photo) .hero-shade{background:linear-gradient(90deg,#041d40e8,#041d4096 68%,#041d4070),linear-gradient(0deg,#041d40fa,transparent 82%)}
+}

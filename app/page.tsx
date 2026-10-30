@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import {ArrowRight,ArrowUpRight,Plane,UserRound,Building2,MapPin,HeartHandshake,ShieldCheck,Headphones} from 'lucide-react';
 import {TravelImage} from '@/components/travel-image';
+import {HeroImage} from '@/components/hero-image';
 import {Benefits,PackageCard,CTASection,Reveal} from '@/components/site';
 import {Button} from '@/components/ui/button';
 import {packages,photos} from '@/lib/config';
 const reasons=[{icon:HeartHandshake,text:'Un accompagnement personnalisé'},{icon:MapPin,text:'Une agence physique à Saint-Denis'},{icon:ShieldCheck,text:'Des séjours organisés avec GOODFLY'},{icon:Headphones,text:'Une assistance selon les prestations de votre contrat'}];
 export default function Home(){return <>
   <section className="hero reference-hero">
-    <TravelImage src={photos.panorama} alt="La Kaaba et les tours de La Mecque" priority sizes="100vw" className="hero-image"/><div className="hero-shade"/>
+    <HeroImage/><div className="hero-shade"/>
     <div className="container hero-content"><span className="eyebrow light">VOYAGES RELIGIEUX</span><h1>Votre Omra<br/><em>au départ de Paris</em></h1><p>Un voyage spirituel inoubliable,<br/>en toute sérénité.</p>
       <div className="hero-trust"><span><span className="trust-icon"><Plane size={25}/></span><span>Départ<br/><strong>de Paris</strong></span></span><span><span className="trust-icon"><UserRound size={25}/></span><span>Accompagnement<br/><strong>personnalisé</strong></span></span><span><span className="trust-icon"><Building2 size={25}/></span><span>Hébergement<br/><strong>selon la formule</strong></span></span></div>
       <div className="hero-actions"><Button asChild><Link href="/forfaits">Découvrir nos forfaits <ArrowRight size={18}/></Link></Button><Link className="hero-secondary" href="/contact">Parler à un conseiller <ArrowUpRight size={16}/></Link></div>
