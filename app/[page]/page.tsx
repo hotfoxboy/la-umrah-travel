@@ -1,3 +1,4 @@
+export const dynamicParams = false;
 import {notFound} from 'next/navigation';
 import {Hero} from '@/components/hero';
 import {TravelImage} from '@/components/travel-image';

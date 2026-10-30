@@ -1,3 +1,36 @@
-﻿import type {NextConfig} from 'next';
-const config:NextConfig={distDir:process.env.NEXT_DIST_DIR||'.next',async headers(){return [{source:'/sw.js',headers:[{key:'Cache-Control',value:'no-cache, no-store, must-revalidate'},{key:'Service-Worker-Allowed',value:'/'}]},{source:'/api/:path*',headers:[{key:'Cache-Control',value:'no-store'}]}];},images:{qualities:[60,75],remotePatterns:[{protocol:'https',hostname:'images.unsplash.com'}]},turbopack:{rules:{'*.css':{loaders:['@tailwindcss/turbopack'],as:'*.css'}}}};
+﻿import type { NextConfig } from "next";
+
+import { basePath } from "./lib/paths";
+
+const config: NextConfig = {
+  output: "export",
+
+  basePath,
+  assetPrefix: basePath,
+  trailingSlash: true,
+  // Avoid retaining a large, regenerable filesystem cache during export.
+  experimental: { turbopackFileSystemCacheForBuild: false },
+  env: { NEXT_PUBLIC_BUILD_YEAR: String(new Date().getUTCFullYear()) },
+
+  images: {
+    unoptimized: true,
+    qualities: [60, 75],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
+
+  turbopack: {
+    rules: {
+      "*.css": {
+        loaders: ["@tailwindcss/turbopack"],
+        as: "*.css",
+      },
+    },
+  },
+};
+
 export default config;

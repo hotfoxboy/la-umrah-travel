@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/serve-static.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test:pwa": "node scripts/test-sw.mjs",
     "test:mobile": "node scripts/mobile-check.mjs",
-    "audit:mobile": "node scripts/lighthouse-mobile.mjs"
+    "audit:mobile": "node scripts/lighthouse-mobile.mjs",
+    "test:export": "node scripts/check-export.mjs",
+    "test:quote": "node scripts/test-quote-delivery.mjs",
+    "test:smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^6.0.2",

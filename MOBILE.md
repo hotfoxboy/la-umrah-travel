@@ -1,5 +1,7 @@
 # Expérience mobile et PWA
 
+> GitHub Pages : la configuration actuelle est statique. Ouvrir http://localhost:3000/la-umrah-travel/ apres `npm run build` et `npm start`. Le formulaire prepare un email sans confirmation de transmission, ou utilise un endpoint HTTPS optionnel. Voir [GITHUB-PAGES.md](./GITHUB-PAGES.md). Les scores ci-dessous sont historiques et ne constituent pas une nouvelle mesure de cette exportation.
+
 Le site fonctionne directement dans le navigateur. Son installation sur l’écran d’accueil est facultative et dépend du navigateur. Les icônes à initiales restent provisoires en attendant le logo officiel.
 
 ## Comportements livrés

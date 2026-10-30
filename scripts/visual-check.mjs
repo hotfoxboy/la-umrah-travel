@@ -18,7 +18,7 @@ try {
  await send('Page.enable');
  for(const width of [390,768,1440]){
  await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<768});
- await send('Page.navigate',{url:'http://localhost:3000'});await pause(2000);
+ await send('Page.navigate',{url:'http://localhost:3000/la-umrah-travel'});await pause(2000);
  const metrics=await evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})');
  assert.ok(metrics.scroll<=width,JSON.stringify({width,...metrics}));
  if(width===390){await evaluate('document.querySelector(".menu-toggle").click()');assert.equal(await evaluate('document.querySelector(".navigation").classList.contains("open")'),true);await evaluate('document.querySelector(".menu-toggle").click()');}
