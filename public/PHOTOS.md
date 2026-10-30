@@ -7,7 +7,7 @@ Références des photographies téléchargées pour la présentation locale. Vé
 
 - kaaba-panorama.jpg : Ekrem Osmanoglu, Unsplash, https://unsplash.com/photos/TbTeMOmgQJo (photo-1579305796153-ab71ce202953). Illustration de catalogue, sans engagement sur les prestations.
 
-- Hero accueil uniquement : arjan carja, Pexels, https://www.pexels.com/photo/aerial-view-of-mecca-s-grand-mosque-at-night-36954370/. Licence : https://www.pexels.com/license/. Photo originale 4000 x 3000. Recadrages desktop/mobile, luminosite +10 %, saturation +8 %, compression AVIF/WebP 480-1920 px, repli JPEG 1600 px. Fichiers : images/hero/haram-night*. Photographie reelle, sans generation artificielle.
+- Hero accueil uniquement : Ramiar Dilshad, Pexels, https://www.pexels.com/photo/long-exposure-photo-of-kaaba-surrounded-by-crowds-of-people-26436656/. Licence : https://www.pexels.com/license/. Photographie choisie par le client, originale 4032 x 2268. Recadrage mobile et compression AVIF/WebP 480-1920 px, repli JPEG 1600 px. Fichiers : images/hero/kaaba-tawaf*. Aucune modification du contenu de la photographie.
 
 ## Galerie du voyage
 
