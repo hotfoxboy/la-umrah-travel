@@ -7,7 +7,7 @@ Références des photographies téléchargées pour la présentation locale. Vé
 
 - kaaba-panorama.jpg : Ekrem Osmanoglu, Unsplash, https://unsplash.com/photos/TbTeMOmgQJo (photo-1579305796153-ab71ce202953). Illustration de catalogue, sans engagement sur les prestations.
 
-- Hero accueil uniquement : Ramiar Dilshad, Pexels, https://www.pexels.com/photo/long-exposure-photo-of-kaaba-surrounded-by-crowds-of-people-26436656/. Licence : https://www.pexels.com/license/. Photographie choisie par le client, originale 4032 x 2268. Recadrage mobile et compression AVIF/WebP 480-1920 px, repli JPEG 1600 px. Fichiers : images/hero/kaaba-tawaf*. Aucune modification du contenu de la photographie.
+- Hero accueil uniquement : Ramiar Dilshad, Pexels, https://www.pexels.com/photo/long-exposure-photo-of-kaaba-surrounded-by-crowds-of-people-26436656/. Licence : https://www.pexels.com/license/. Photographie choisie par le client, originale 4032 x 2268. Recadrage mobile et compression AVIF qualite 60 / WebP qualite 84, variantes mobile 480/800/1200 px et desktop 800/1280/1920/2560 px, repli JPEG 1920 px qualite 85. Fichiers : images/hero/kaaba-tawaf-hq*. Credit conserve dans ce fichier ; attribution visible non requise par la licence Pexels. Aucune modification du contenu de la photographie.
 
 ## Galerie du voyage
 
