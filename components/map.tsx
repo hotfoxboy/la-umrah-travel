@@ -1,0 +1,4 @@
+'use client';
+import {useState} from 'react';
+import {Button} from './ui/button';
+export function AgencyMap(){const [show,setShow]=useState(false);return <div className="map-panel"><h3>Nous retrouver à Saint-Denis</h3><p>Centre Commercial Basilique · localisation indicative du centre commercial.</p>{show?<iframe title="Carte du Centre Commercial Basilique à Saint-Denis" src="https://maps.google.com/maps?q=Centre%20Commercial%20Basilique%20Saint-Denis&output=embed" loading="lazy" referrerPolicy="no-referrer"/>:<><p className="form-note">Le chargement de la carte transmet des données techniques à Google Maps.</p><Button variant="outline" onClick={()=>setShow(true)}>Charger la carte interactive</Button></>}<p><a href="https://www.google.com/maps/search/?api=1&query=Centre+Commercial+Basilique+Saint-Denis" target="_blank" rel="noopener noreferrer">Ouvrir l’itinéraire ↗</a></p></div>;}

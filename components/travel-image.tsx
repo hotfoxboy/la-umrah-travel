@@ -1,0 +1,3 @@
+import Image from 'next/image';
+import {photos} from '@/lib/config';
+export function TravelImage({src,alt,priority=false,className,sizes='100vw'}:{src:string;alt:string;priority?:boolean;className?:string;sizes?:string}){return <picture>{src===photos.makkah&&<><source media="(max-width: 767px)" type="image/avif" srcSet="/kaaba-mobile-480.avif 480w, /kaaba-mobile-800.avif 800w" sizes={sizes}/><source media="(max-width: 767px)" type="image/webp" srcSet="/kaaba-mobile-480.webp 480w, /kaaba-mobile-800.webp 800w" sizes={sizes}/></>}<Image src={src} alt={alt} fill className={className} sizes={sizes} quality={60} loading={priority?'eager':'lazy'} fetchPriority={priority?'high':'auto'}/></picture>;}
