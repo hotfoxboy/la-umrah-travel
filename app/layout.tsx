@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import './mobile.css';
 import './design.css';
+import './readability.css';
 import {Header,Footer,WhatsAppButton} from '@/components/site';
 import {AppLifecycle, MobileNavigation, KeyboardGuard, ConnectionStatus} from '@/components/app-shell';
 import {assetPath,siteOrigin} from '@/lib/paths';

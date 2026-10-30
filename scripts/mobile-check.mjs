@@ -35,6 +35,13 @@ try{
   for(const path of (process.env.TEST_PATHS?process.env.TEST_PATHS.split(','):['/','/forfaits/confort','/contact'])){
    await go(path);
    if(process.env.TEST_TYPOGRAPHY==='1')await checkTypography(`${width}px ${path}`);
+   if(process.env.TEST_READABILITY==='1'){
+    const failures=await evaluate(`(()=>{
+      const groups=[['body,.section-heading p,.package-body>p:not(.unavailable),.package-body li,.prose p,.prose li,.faq p,.contact-introduction p',18],['.unavailable,.field label,.consent,.commercial-note,.form-note,.contact-form .form-note,.contact-line strong,.essential-cards>div',16],['.field input,.field select,.field textarea',18],['.bottom-nav a',14]];
+      return groups.flatMap(([selector,min])=>[...document.querySelectorAll(selector)].filter(el=>el.getClientRects().length&&parseFloat(getComputedStyle(el).fontSize)<min).map(el=>({tag:el.tagName,class:el.className,size:getComputedStyle(el).fontSize,min})));
+    })()`);
+    assert.deepEqual(failures,[],`${width}px ${path}: reading sizes`);
+   }
    const result=await evaluate(`({scroll:document.documentElement.scrollWidth,width:innerWidth,nav:getComputedStyle(document.querySelector('.bottom-nav')).display})`);
    assert.ok(result.scroll<=width,JSON.stringify({path,width,...result}));assert.equal(result.nav==='none',width>=1024);
    if(width<1024){assert.equal(await evaluate("document.querySelectorAll('.bottom-nav a').length"),5);assert.equal(await evaluate("[...document.querySelectorAll('.bottom-nav a')].every(el=>{const r=el.getBoundingClientRect();return r.width>=44&&r.height>=44;})"),true);}

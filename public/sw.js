@@ -2,7 +2,7 @@
 const SCOPE = new URL(self.registration.scope);
 const BASE = SCOPE.pathname.replace(/\/$/, '');
 const CACHE_PREFIX = `la-umrah-static:${encodeURIComponent(SCOPE.pathname)}:`;
-const VERSION = `${CACHE_PREFIX}v4`;
+const VERSION = `${CACHE_PREFIX}v5`;
 const path = name => new URL(name, SCOPE).pathname;
 const OFFLINE = path('hors-connexion.html');
 const ASSETS = [OFFLINE, path('fonts/quicksand-latin.woff2'), ...['icon-192.png','icon-512.png','maskable-512.png','apple-touch-icon.png'].map(name => path(`icons/${name}`))];
