@@ -66,3 +66,11 @@ Executer `npm run build`, `npm run test:export`, `npm run test:pwa`, `npm run te
 ## Actualités
 
 Le blog indépendant et sa publication Markdown sont documentés dans [BLOG.md](./BLOG.md). Validation après build : `node scripts/check-blog.mjs`.
+
+## Taille du projet et nettoyage
+
+Le code source et les images du site sont distincts des dépendances et fichiers de développement. `node_modules` est nécessaire pour développer/compiler et se recrée avec `npm ci`. Ne jamais envoyer ce dossier, `.git` ou `.next` à un hébergement HTML statique : seul le contenu de `out` est destiné à la publication statique.
+
+`npm run clean` supprime uniquement les caches `.next/dev` et `.next/cache`, l’ancien build `.next-redesign`, les outils d’audit téléchargés dans `.audit-tools`, les profils Chrome de test, les captures `preview-*.png`, rapports `lighthouse-*.json` et le cache TypeScript. Prévisualisation sans suppression : `npm run clean -- --dry-run`. Fermer les tests et le serveur de développement avant ce nettoyage. Les sources, dépendances, configurations, fichiers `.env`, historique Git et export `out` sont conservés.
+
+Après nettoyage, `npm run dev` ou `npm run build` recrée les caches nécessaires. La commande d’audit Lighthouse reste disponible ; elle indique comment réinstaller ses outils isolés à la demande.

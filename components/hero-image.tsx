@@ -11,4 +11,4 @@ export function HeroImage(){return <><picture className="home-hero-photo">
   <source type="image/avif" srcSet={srcSet([800,1280,1920],'avif')} sizes="(max-width: 1023px) 100vw, 85vw"/>
   <source type="image/webp" srcSet={srcSet([800,1280,1920],'webp')} sizes="(max-width: 1023px) 100vw, 85vw"/>
   <Image src={assetPath('/images/hero/haram-night.jpg')} alt="Vue aérienne nocturne de la Kaaba au cœur de la mosquée Masjid al-Haram illuminée, à La Mecque" fill sizes="100vw" loading="eager" fetchPriority="high" className="hero-image"/>
-</picture><a className="hero-photo-credit" href="https://commons.wikimedia.org/wiki/File:Great_Mosque_of_Mecca.jpg" target="_blank" rel="noreferrer" aria-label="Crédit photo : Yasser Bakhsh / saudipics, CC BY-SA 4.0, image recadrée et éclaircie">Photo : Yasser Bakhsh / saudipics · CC BY-SA 4.0</a></>;}
+</picture><a className="hero-photo-credit" href="https://www.pexels.com/photo/aerial-view-of-mecca-s-grand-mosque-at-night-36954370/" target="_blank" rel="noreferrer" aria-label="Photo : arjan carja / Pexels, recadrage et correction de luminosité">Photo : arjan carja / Pexels</a></>;}

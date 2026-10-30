@@ -13,7 +13,8 @@
     "audit:mobile": "node scripts/lighthouse-mobile.mjs",
     "test:export": "node scripts/check-export.mjs",
     "test:quote": "node scripts/test-quote-delivery.mjs",
-    "test:smoke": "node scripts/smoke.mjs"
+    "test:smoke": "node scripts/smoke.mjs",
+    "clean": "node scripts/clean.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^6.0.2",
