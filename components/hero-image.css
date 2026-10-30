@@ -1,6 +1,7 @@
 /* Only the home Hero uses this photograph and overlay. */
 .reference-hero>picture.home-hero-photo{inset:0 0 0 15%}
 .reference-hero .home-hero-photo .hero-image{object-position:center 65%;filter:none}
+.reference-hero .hero-photo-credit{position:absolute;bottom:8px;left:20px;font-size:11px;line-height:1.4;color:#fff;background:#041d40b3;padding:4px 7px;border-radius:3px;z-index:1}
 .reference-hero:has(>.home-hero-photo) .hero-shade{background:linear-gradient(90deg,#041d40 0%,#062851f5 24%,#062851c9 40%,#06285124 66%,#041d4014),linear-gradient(0deg,#041d4070,transparent 45%)}
 @media(max-width:1023px){
   .reference-hero>picture.home-hero-photo{inset:0}
