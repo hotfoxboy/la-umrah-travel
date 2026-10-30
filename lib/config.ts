@@ -6,4 +6,4 @@ export const packages = [
  {slug:'confort',name:'Confort',price:'1 580 €',available:true,description:'La sérénité à chaque étape de votre Omra.',image:photos.medina},
  {slug:'premium',name:'Premium',price:'Sur demande',available:false,description:'Une attention particulière à votre confort.',image:photos.medina},
 ];
-export const navigation = [['Accueil','/'],['Nos forfaits','/forfaits'],['Notre approche','/notre-approche'],['Notre agence','/agence'],['Contact','/contact']];
+export const navigation = [['Accueil','/'],['Nos forfaits','/forfaits'],['Notre approche','/notre-approche'],['Notre agence','/agence'],['Actualités','/actualites'],['Contact','/contact']];

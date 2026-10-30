@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
 import { absolutePageUrl } from "@/lib/paths";
+import {getArticles} from '@/lib/blog';
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const pages = [
     "/",
     "/forfaits",
     "/forfaits/confort",
@@ -17,7 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/confidentialite",
     "/cookies",
     "/conditions",
+    "/actualites",
   ].map((path) => ({
     url: absolutePageUrl(path),
   }));
+  return [...pages,...getArticles().map(article=>({url:absolutePageUrl(`/actualites/${article.slug}`),lastModified:new Date(article.date+'T12:00:00Z')}))];
 }

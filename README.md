@@ -62,3 +62,7 @@ Les textes juridiques signalent leurs éléments manquants et ne doivent pas êt
 ## Verifications
 
 Executer `npm run build`, `npm run test:export`, `npm run test:pwa`, `npm run test:quote`, `npm run lint` et `npm run typecheck`. Les anciens tests de l’API Node sont conserves dans `server/quote/smoke.mjs` et ne concernent pas GitHub Pages. Les tests mobiles sont adaptes au sous-repertoire. Voir [GITHUB-PAGES.md](./GITHUB-PAGES.md).
+
+## Actualités
+
+Le blog indépendant et sa publication Markdown sont documentés dans [BLOG.md](./BLOG.md). Validation après build : `node scripts/check-blog.mjs`.

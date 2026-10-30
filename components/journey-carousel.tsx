@@ -22,10 +22,11 @@ export function JourneyCarousel(){
   const visible=useRef(false);
   const current=useRef(0);
   const drag=useRef<{x:number;scroll:number}|null>(null);
+  const step=()=>{const el=track.current;if(!el||el.children.length<2)return 1;return (el.children[1] as HTMLElement).offsetLeft-(el.children[0] as HTMLElement).offsetLeft;};
   const goTo=useCallback((index:number)=>{
     const el=track.current;if(!el)return;
     const next=(index+journeyGallery.length)%journeyGallery.length;
-    el.scrollTo({left:next*el.clientWidth,behavior:reduce?'instant':'smooth'});
+    el.scrollTo({left:next*step(),behavior:reduce?'instant':'smooth'});
   },[reduce]);
 
   useEffect(()=>{
@@ -41,7 +42,7 @@ export function JourneyCarousel(){
   useEffect(()=>{
     const el=track.current;if(!el)return;
     // Keep the selected photograph aligned after orientation or viewport changes.
-    const observer=new ResizeObserver(()=>el.scrollTo({left:current.current*el.clientWidth,behavior:'instant'}));
+    const observer=new ResizeObserver(()=>el.scrollTo({left:current.current*step(),behavior:'instant'}));
     observer.observe(el);return()=>observer.disconnect();
   },[]);
 
@@ -50,7 +51,7 @@ export function JourneyCarousel(){
     onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
     onFocusCapture={event=>{if(!(event.target as HTMLElement).closest('[data-playback]'))setPlaying(false);}}>
     <div className="container">
-      <div className="journey-gallery-heading"><div><span className="journey-gallery-eyebrow">L’INSPIRATION DU VOYAGE</span><h2 id="journey-gallery-title">Des lieux sacrés.<br/><span>Des émotions inoubliables.</span></h2></div><p>De La Mecque à Médine, un regard sur les lieux et les instants qui font la beauté de votre Omra.</p></div>
+      <div className="journey-gallery-heading"><span className="journey-gallery-eyebrow">LE VOYAGE EN IMAGES</span><div key={journeyGallery[active].id} className="journey-gallery-copy"><span className="journey-gallery-location"><MapPin size={15} aria-hidden="true"/>{journeyGallery[active].location}</span><h2 id="journey-gallery-title">{journeyGallery[active].title}</h2><p>{journeyGallery[active].description}</p><span className="journey-gallery-copy-rule" aria-hidden="true"/></div></div>
       <div className="journey-gallery-frame">
         <div ref={track} id="journey-gallery-slides" className="journey-gallery-track" tabIndex={0} aria-label="Photographies du voyage. Utilisez les flèches pour naviguer."
           onPointerDown={event=>{setPlaying(false);if(event.pointerType==='mouse'&&event.button===0){const el=event.currentTarget;drag.current={x:event.clientX,scroll:el.scrollLeft};el.style.scrollSnapType='none';el.setPointerCapture(event.pointerId);}}}
@@ -58,7 +59,7 @@ export function JourneyCarousel(){
           onPointerUp={event=>{if(drag.current){drag.current=null;event.currentTarget.style.scrollSnapType='';goTo(current.current);}}}
           onPointerCancel={event=>{drag.current=null;event.currentTarget.style.scrollSnapType='';}}
           onKeyDown={event=>{if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();select(current.current+(event.key==='ArrowRight'?1:-1));}if(event.key==='Home'||event.key==='End'){event.preventDefault();select(event.key==='Home'?0:journeyGallery.length-1);}}}
-          onScroll={()=>{const el=track.current;if(!el)return;const index=Math.min(journeyGallery.length-1,Math.max(0,Math.round(el.scrollLeft/el.clientWidth)));current.current=index;setActive(index);}}>
+          onScroll={()=>{const el=track.current;if(!el)return;const index=Math.min(journeyGallery.length-1,Math.max(0,Math.round(el.scrollLeft/step())));current.current=index;setActive(index);}}>
           {journeyGallery.map((slide,index)=><figure key={slide.id} className="journey-gallery-slide" role="group" aria-roledescription="diapositive" aria-label={`${index+1} sur ${journeyGallery.length} : ${slide.title}`} aria-hidden={index!==active}>
             <picture><source type="image/avif" srcSet={[640,1024,1600].map(width=>`${assetPath(`/images/journey/${slide.image}-${width}.avif`)} ${width}w`).join(', ')} sizes="(max-width: 767px) 100vw, (max-width: 1440px) 90vw, 1280px"/><source type="image/webp" srcSet={[640,1024,1600].map(width=>`${assetPath(`/images/journey/${slide.image}-${width}.webp`)} ${width}w`).join(', ')} sizes="(max-width: 767px) 100vw, (max-width: 1440px) 90vw, 1280px"/><Image src={assetPath(`/images/journey/${slide.image}-1024.webp`)} alt={slide.alt} fill sizes="100vw" loading="lazy" draggable={false}/></picture>
             <figcaption><span className="journey-gallery-location"><MapPin size={15} aria-hidden="true"/>{slide.location}</span><h3>{slide.title}</h3><p>{slide.description}</p></figcaption>
